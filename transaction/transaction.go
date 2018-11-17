@@ -1,22 +1,30 @@
 package transaction
 
-import "time"
-import "../account"
+import (
+	"crypto/sha256"
+	"strconv"
+	"time"
+)
+import "lego/account"
 
 type Address account.Account
 
 type Transaction struct {
-	origin    *account.Account
-	target    *account.Account
-	amount    int64
-	timestamp time.Time
-	Hash      string
+	Origin    *account.Account
+	Target    *account.Account
+	Amount    int64
+	Timestamp time.Time
 }
 
-func (t Transaction) ValidateTransaction() bool {
-	a := new(account.Account)
-	a.Initialize("hola")
+func (t *Transaction) CalculateHash() string {
 
+	var transactionContent string = t.Origin.Address.N.String() +
+		t.Target.Address.N.String() +
+		strconv.Itoa(int(t.Amount)) +
+		t.Timestamp.String()
 
-	return true
+	hasher := sha256.New()
+	hasher.Write([]byte(transactionContent))
+	finalString := string(hasher.Sum(nil))
+	return finalString
 }
