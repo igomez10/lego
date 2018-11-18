@@ -3,9 +3,9 @@ package account
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"log"
-
+	"crypto/sha1"
 	"golang.org/x/crypto/ssh"
+	"log"
 )
 
 // Account holds data regarding the public-private key and amount in tokens
@@ -64,4 +64,15 @@ func generatePublicKey(privatekey *rsa.PublicKey) ([]byte, error) {
 	pubKeyBytes := ssh.MarshalAuthorizedKey(publicRsaKey)
 
 	return pubKeyBytes, nil
+}
+
+// Sign signs the given transaction with the publicKey
+func (ac *Account) Sign(transaction []byte) []byte {
+	label := []byte("")
+	sha1hash := sha1.New()
+	encryptedmsg, err := rsa.EncryptOAEP(sha1hash, rand.Reader, ac.privateKey.Public().(*rsa.PublicKey), transaction, label)
+	if err != nil {
+		log.Println(err)
+	}
+	return encryptedmsg
 }

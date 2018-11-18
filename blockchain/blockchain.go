@@ -1,8 +1,14 @@
-package blockchain
+package main
 
-import "../block"
+import (
+	"fmt"
+	"lego/block"
+)
 
-type Blockchain struct {
-	genesisBlock    block.Block
-	mostRecentBlock block.Block
+
+func main() {
+	genesisTransactions := []string{"Hello","hi"}
+	genesisBlock := block.NewBlock( genesisTransactions, nil )
+	fmt.Printf("%+v \n", genesisBlock.Hash)
+	fmt.Println("FINISH")
 }

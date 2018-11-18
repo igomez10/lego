@@ -18,11 +18,14 @@ type Transaction struct {
 
 func (t *Transaction) CalculateHash() string {
 
-	var transactionContent string = t.Origin.Address.N.String() +
-		t.Target.Address.N.String() +
+	var transactionContent string = t.Origin.Address +
+		t.Target.Address +
 		strconv.Itoa(int(t.Amount)) +
 		t.Timestamp.String()
+	tr := []byte(transactionContent)
 
+	originSign := t.Origin.Sign(tr)
+	targetSign := t.Target.Sign(tr)
 	hasher := sha256.New()
 	hasher.Write([]byte(transactionContent))
 	finalString := string(hasher.Sum(nil))
