@@ -37,8 +37,10 @@ func NewBlock(transactionPool *mempool, previousBlock *Block) *Block {
 	return &currentBlock
 }
 
+// selectTransactions chooses the transactions from the mempool that
+// will be added into the blockchain, expected to be  judged by the transaction fee
 func selectTransactions(transactionPool *mempool) []Transaction {
-	return []Transaction{}
+	return (*transactionPool)[:10]
 }
 
 // resolveTransaction hashes a specific transaction
