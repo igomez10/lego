@@ -4,8 +4,9 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha1"
-	"golang.org/x/crypto/ssh"
 	"log"
+
+	"golang.org/x/crypto/ssh"
 )
 
 // Account holds data regarding the public-private key and amount in tokens
@@ -62,8 +63,8 @@ func generatePublicKey(privatekey *rsa.PublicKey) ([]byte, error) {
 	}
 
 	pubKeyBytes := ssh.MarshalAuthorizedKey(publicRsaKey)
-
 	return pubKeyBytes, nil
+
 }
 
 // Sign signs the given transaction with the publicKey

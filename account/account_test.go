@@ -10,8 +10,6 @@ import (
 	"testing"
 )
 
-// import "lego/account"
-
 func TestAccount_NewAccount(t *testing.T) {
 
 	firstAccount := NewAccount()
@@ -36,4 +34,5 @@ func TestAccount_NewAccount(t *testing.T) {
 	if !bytes.Equal(msg, decryptedmsg) {
 		t.Error("Encription/Decription with account prublic/private keys not working")
 	}
+
 }
